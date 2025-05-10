@@ -19,3 +19,15 @@ export async function PATCH(
   users[userIndex]["name"] = userRequest.name;
   return Response.json(users[userIndex]);
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const userIndex = users.findIndex((item) => item.id == Number(id));
+  if (userIndex > 0) {
+    users.splice(userIndex, 1);
+  }
+  return Response.json({ message: "User deleted" });
+}
